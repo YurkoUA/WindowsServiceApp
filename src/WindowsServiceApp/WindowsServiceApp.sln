@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2047
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsServiceApp.Logger", "WindowsServiceApp.Logger\WindowsServiceApp.Logger.csproj", "{A6FEF965-A266-497F-B47D-EFED1D7A41DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsServiceApp.Sender", "WindowsServiceApp.Sender\WindowsServiceApp.Sender.csproj", "{CEC8658A-A6F7-4A88-A4BE-C865B57177FE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6FEF965-A266-497F-B47D-EFED1D7A41DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6FEF965-A266-497F-B47D-EFED1D7A41DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6FEF965-A266-497F-B47D-EFED1D7A41DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6FEF965-A266-497F-B47D-EFED1D7A41DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEC8658A-A6F7-4A88-A4BE-C865B57177FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEC8658A-A6F7-4A88-A4BE-C865B57177FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEC8658A-A6F7-4A88-A4BE-C865B57177FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEC8658A-A6F7-4A88-A4BE-C865B57177FE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E5C5D295-B6A8-466E-8950-A1B1E8E93C10}
+	EndGlobalSection
+EndGlobal
