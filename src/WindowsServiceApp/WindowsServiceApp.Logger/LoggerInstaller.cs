@@ -2,15 +2,15 @@
 using System.Configuration.Install;
 using System.ServiceProcess;
 
-namespace WindowsServiceApp.Sender
+namespace WindowsServiceApp.Logger
 {
     [RunInstaller(true)]
-    public partial class SenderInstaller : Installer
+    public partial class LoggerInstaller : Installer
     {
         private ServiceInstaller serviceInstaller;
         private ServiceProcessInstaller serviceProcessInstaller;
 
-        public SenderInstaller()
+        public LoggerInstaller()
         {
             InitializeComponent();
 
@@ -22,8 +22,8 @@ namespace WindowsServiceApp.Sender
             serviceInstaller = new ServiceInstaller
             {
                 StartType = ServiceStartMode.Manual,
-                DisplayName = "SELF-EDUCATION Sender Service",
-                ServiceName = "SenderService"
+                DisplayName = "SELF-EDUCATION Logger Service",
+                ServiceName = "LoggerService"
             };
 
             Installers.Add(serviceProcessInstaller);

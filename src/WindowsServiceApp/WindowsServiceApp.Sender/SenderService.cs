@@ -9,12 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
+using Timer = System.Timers.Timer;
 
 namespace WindowsServiceApp.Sender
 {
     public partial class SenderService : ServiceBase
     {
-        System.Timers.Timer timer = new System.Timers.Timer();
+        Timer timer;
 
         public SenderService()
         {
@@ -23,19 +24,20 @@ namespace WindowsServiceApp.Sender
 
         protected override void OnStart(string[] args)
         {
-            timer.Interval = 5000.0;
-            timer.Enabled = true;
-            timer.AutoReset = true;
+            timer = new Timer
+            {
+                Interval = 5000.0,
+                Enabled = true,
+                AutoReset = true
+            };
             timer.Elapsed += new ElapsedEventHandler(TimerTick);
 
             timer.Start();
-            base.OnStart(args);
         }
 
         protected override void OnStop()
         {
             timer.Stop();
-            base.OnStop();
         }
 
         private void TimerTick(object sender, ElapsedEventArgs args)
