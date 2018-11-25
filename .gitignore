@@ -347,3 +347,4 @@ src/WindowsServiceApp/WindowsServiceApp.Infrastructure/obj/
 */obj/*
 *.exe
 *.pdb
+*.resx

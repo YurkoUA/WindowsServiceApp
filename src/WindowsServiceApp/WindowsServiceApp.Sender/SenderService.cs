@@ -26,7 +26,7 @@ namespace WindowsServiceApp.Sender
         {
             timer = new Timer
             {
-                Interval = 5000.0,
+                Interval = 2000,
                 Enabled = true,
                 AutoReset = true
             };

@@ -28,10 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.components = new System.ComponentModel.Container();
+            this.loggerPopup = new System.Windows.Forms.NotifyIcon(this.components);
+            // 
+            // loggerPopup
+            // 
+            this.loggerPopup.Visible = true;
+            // 
+            // LoggerService
+            // 
             this.ServiceName = "Service1";
+
         }
 
         #endregion
+
+        private System.Windows.Forms.NotifyIcon loggerPopup;
     }
 }
