@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using WindowsServiceApp.Infrastructure.Models;
+using WindowsServiceApp.Mongo.Models;
 
 namespace WindowsServiceApp.Logger
 {
@@ -29,7 +29,7 @@ namespace WindowsServiceApp.Logger
                         Source = l.Source,
                         TimeGenerated = l.TimeGenerated,
                         TimeWritten = l.TimeWritten
-                    });
+                    }).ToList();
 
                 return entries;
             }

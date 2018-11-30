@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 using WindowsServiceApp.Infrastructure;
-using WindowsServiceApp.Infrastructure.Models;
 using WindowsServiceApp.Mongo;
+using WindowsServiceApp.Mongo.Models;
 using Timer = System.Timers.Timer;
 
 namespace WindowsServiceApp.Logger
@@ -19,7 +19,7 @@ namespace WindowsServiceApp.Logger
     public partial class LoggerService : ServiceBase
     {
         Timer timer;
-        EventLogReader logReader = new EventLogReader("Security");
+        EventLogReader logReader = new EventLogReader("Application");
 
         IDbConnection dbConnection;
         IRepository<EventLogRecord> repository;
@@ -52,12 +52,11 @@ namespace WindowsServiceApp.Logger
         private void TimerTick(object sender, ElapsedEventArgs args)
         {
             var logs = logReader.GetEventLogs(DateTime.Now.AddMinutes(-2));
-            repository.InsertAsync(logs).Wait();
 
-            loggerPopup.BalloonTipTitle = "Logger";
-            loggerPopup.BalloonTipIcon = ToolTipIcon.Info;
-            loggerPopup.Visible = true;
-            loggerPopup.ShowBalloonTip(1000);
+            if (!logs.Any())
+                return;
+
+            repository.InsertAsync(logs).Wait();
         }
     }
 }

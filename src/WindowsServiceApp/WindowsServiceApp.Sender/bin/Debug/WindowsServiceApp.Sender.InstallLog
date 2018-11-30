@@ -211,3 +211,16 @@ Affected parameters are:
    logtoconsole = 
    assemblypath = D:\Repositories\WindowsServiceApp\src\WindowsServiceApp\WindowsServiceApp.Sender\bin\Debug\WindowsServiceApp.Sender.exe
    logfile = D:\Repositories\WindowsServiceApp\src\WindowsServiceApp\WindowsServiceApp.Sender\bin\Debug\WindowsServiceApp.Sender.InstallLog
+Installing assembly 'C:\Users\nosach.yurii\Documents\WindowsServiceApp\src\WindowsServiceApp\WindowsServiceApp.Sender\bin\Debug\WindowsServiceApp.Sender.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = C:\Users\nosach.yurii\Documents\WindowsServiceApp\src\WindowsServiceApp\WindowsServiceApp.Sender\bin\Debug\WindowsServiceApp.Sender.exe
+   logfile = C:\Users\nosach.yurii\Documents\WindowsServiceApp\src\WindowsServiceApp\WindowsServiceApp.Sender\bin\Debug\WindowsServiceApp.Sender.InstallLog
+Installing service SenderService...
+Service SenderService has been successfully installed.
+Creating EventLog source SenderService in log Application...
+Committing assembly 'C:\Users\nosach.yurii\Documents\WindowsServiceApp\src\WindowsServiceApp\WindowsServiceApp.Sender\bin\Debug\WindowsServiceApp.Sender.exe'.
+Affected parameters are:
+   logtoconsole = 
+   assemblypath = C:\Users\nosach.yurii\Documents\WindowsServiceApp\src\WindowsServiceApp\WindowsServiceApp.Sender\bin\Debug\WindowsServiceApp.Sender.exe
+   logfile = C:\Users\nosach.yurii\Documents\WindowsServiceApp\src\WindowsServiceApp\WindowsServiceApp.Sender\bin\Debug\WindowsServiceApp.Sender.InstallLog

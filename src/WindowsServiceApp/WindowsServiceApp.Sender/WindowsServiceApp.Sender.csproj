@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
@@ -45,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmailSender.cs" />
+    <Compile Include="MarkupBuilder.cs" />
     <Compile Include="SenderInstaller.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -67,6 +70,16 @@
     <EmbeddedResource Include="SenderService.resx">
       <DependentUpon>SenderService.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WindowsServiceApp.Infrastructure\WindowsServiceApp.Infrastructure.csproj">
+      <Project>{7B01A4A4-F5CB-4C66-8C2A-7FF6881D082F}</Project>
+      <Name>WindowsServiceApp.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WindowsServiceApp.Mongo\WindowsServiceApp.Mongo.csproj">
+      <Project>{1B88B083-68D9-4BEB-ADD8-E418CEE087C5}</Project>
+      <Name>WindowsServiceApp.Mongo</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
