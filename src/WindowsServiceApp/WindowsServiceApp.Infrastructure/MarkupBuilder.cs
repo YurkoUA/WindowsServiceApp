@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-using WindowsServiceApp.Mongo.Models;
+using WindowsServiceApp.Common.Models;
+using WindowsServiceApp.Infrastructure.Interfaces;
 
-namespace WindowsServiceApp.Sender
+namespace WindowsServiceApp.Infrastructure
 {
-    public class MarkupBuilder
+    public class MarkupBuilder : IMarkupBuilder
     {
         public string Build(IEnumerable<EventLogRecord> logs)
         {

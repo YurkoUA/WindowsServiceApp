@@ -1,5 +1,5 @@
 ﻿using MongoDB.Driver;
-using WindowsServiceApp.Infrastructure;
+using WindowsServiceApp.Infrastructure.Interfaces;
 
 namespace WindowsServiceApp.Mongo
 {

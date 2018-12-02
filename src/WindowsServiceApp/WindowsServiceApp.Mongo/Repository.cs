@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using WindowsServiceApp.Infrastructure;
+using WindowsServiceApp.Infrastructure.Interfaces;
 
 namespace WindowsServiceApp.Mongo
 {

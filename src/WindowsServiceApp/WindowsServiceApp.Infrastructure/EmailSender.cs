@@ -1,10 +1,11 @@
 ﻿using System.Net;
 using System.Net.Mail;
 using WindowsServiceApp.Infrastructure;
+using WindowsServiceApp.Infrastructure.Interfaces;
 
-namespace WindowsServiceApp.Sender
+namespace WindowsServiceApp.Infrastructure
 {
-    public class EmailSender
+    public class EmailSender : IEmailSender
     {
         private readonly SmtpConfiguration smtpConfiguration;
 

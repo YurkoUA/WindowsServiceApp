@@ -2,9 +2,8 @@
 using System.Linq;
 using System.ServiceProcess;
 using System.Timers;
-using WindowsServiceApp.Infrastructure;
-using WindowsServiceApp.Mongo;
-using WindowsServiceApp.Mongo.Models;
+using WindowsServiceApp.Common.Models;
+using WindowsServiceApp.Infrastructure.Interfaces;
 using Timer = System.Timers.Timer;
 
 namespace WindowsServiceApp.Logger
@@ -12,21 +11,16 @@ namespace WindowsServiceApp.Logger
     public partial class LoggerService : ServiceBase
     {
         private Timer timer;
-        private readonly EventLogReader logReader;
-        private readonly ConfigurationService configurationService = new ConfigurationService();
 
-        private readonly IDbConnection dbConnection;
+        private readonly IEventLogReader logReader;
         private readonly IRepository<EventLogRecord> repository;
 
-        public LoggerService()
+        public LoggerService(IEventLogReader logReader, IRepository<EventLogRecord> repository)
         {
             InitializeComponent();
 
-            logReader = new EventLogReader(configurationService.GetEventLogName());
-            dbConnection = new DbConnection(configurationService.GetDefaultConnectionString(), 
-                configurationService.GetDatabaseName());
-
-            repository = new Repository<EventLogRecord>(dbConnection, "EventLogs");
+            this.logReader = logReader;
+            this.repository = repository;
         }
 
         protected override void OnStart(string[] args)

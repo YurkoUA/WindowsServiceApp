@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System.Configuration;
+using System.Linq;
 using System.ServiceProcess;
 using System.Timers;
+using WindowsServiceApp.Common.Models;
 using WindowsServiceApp.Infrastructure;
+using WindowsServiceApp.Infrastructure.Interfaces;
 using WindowsServiceApp.Mongo;
-using WindowsServiceApp.Mongo.Models;
 using Timer = System.Timers.Timer;
 
 namespace WindowsServiceApp.Sender
@@ -15,7 +17,7 @@ namespace WindowsServiceApp.Sender
 
         private Timer timer;
         private EmailSender emailSender;
-        private ConfigurationService configurationService = new ConfigurationService();
+        private ConfigurationService configurationService = new ConfigurationService(ConfigurationManager.AppSettings, ConfigurationManager.ConnectionStrings);
 
         private string subscriberEmail;
         private readonly MarkupBuilder markupBuilder = new MarkupBuilder();

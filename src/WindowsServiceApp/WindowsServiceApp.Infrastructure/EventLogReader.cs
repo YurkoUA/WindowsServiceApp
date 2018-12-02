@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using WindowsServiceApp.Mongo.Models;
+using WindowsServiceApp.Common.Models;
+using WindowsServiceApp.Infrastructure.Interfaces;
 
-namespace WindowsServiceApp.Logger
+namespace WindowsServiceApp.Infrastructure
 {
-    public class EventLogReader
+    public class EventLogReader : IEventLogReader
     {
         private readonly string logName;
 

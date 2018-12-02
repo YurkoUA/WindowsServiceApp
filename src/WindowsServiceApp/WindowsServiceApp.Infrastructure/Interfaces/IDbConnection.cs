@@ -1,6 +1,6 @@
 ﻿using MongoDB.Driver;
 
-namespace WindowsServiceApp.Infrastructure
+namespace WindowsServiceApp.Infrastructure.Interfaces
 {
     public interface IDbConnection
     {
