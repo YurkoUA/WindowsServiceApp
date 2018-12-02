@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Threading.Tasks;
 using WindowsServiceApp.Mongo.Models;
 
 namespace WindowsServiceApp.Sender
@@ -11,11 +8,6 @@ namespace WindowsServiceApp.Sender
     {
         public string Build(IEnumerable<EventLogRecord> logs)
         {
-            if (!logs.Any())
-            {
-                return "<b>There are not any new logs.</b>";
-            }
-
             var sBuilder = new StringBuilder();
             sBuilder.Append(@"<table>
                                 <thead>

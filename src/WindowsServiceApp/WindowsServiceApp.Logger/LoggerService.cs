@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Diagnostics;
 using System.Linq;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
-using System.Windows.Forms;
 using WindowsServiceApp.Infrastructure;
 using WindowsServiceApp.Mongo;
 using WindowsServiceApp.Mongo.Models;
@@ -18,18 +11,22 @@ namespace WindowsServiceApp.Logger
 {
     public partial class LoggerService : ServiceBase
     {
-        Timer timer;
-        EventLogReader logReader = new EventLogReader("Application");
+        private Timer timer;
+        private readonly EventLogReader logReader;
+        private readonly ConfigurationService configurationService = new ConfigurationService();
 
-        IDbConnection dbConnection;
-        IRepository<EventLogRecord> repository;
+        private readonly IDbConnection dbConnection;
+        private readonly IRepository<EventLogRecord> repository;
 
         public LoggerService()
         {
             InitializeComponent();
-            dbConnection = new DbConnection(ConfigurationManager.ConnectionStrings["MongoConnection"].ConnectionString, 
-                ConfigurationManager.AppSettings["DatabaseName"]);
-            repository = new Repository<EventLogRecord>(dbConnection as DbConnection, "EventLogs");
+
+            logReader = new EventLogReader(configurationService.GetEventLogName());
+            dbConnection = new DbConnection(configurationService.GetDefaultConnectionString(), 
+                configurationService.GetDatabaseName());
+
+            repository = new Repository<EventLogRecord>(dbConnection, "EventLogs");
         }
 
         protected override void OnStart(string[] args)
@@ -51,7 +48,7 @@ namespace WindowsServiceApp.Logger
 
         private void TimerTick(object sender, ElapsedEventArgs args)
         {
-            var logs = logReader.GetEventLogs(DateTime.Now.AddMinutes(-2));
+            var logs = logReader.GetEventLogs(DateTime.Now.AddSeconds(-2));
 
             if (!logs.Any())
                 return;

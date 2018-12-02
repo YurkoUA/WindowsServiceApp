@@ -19,5 +19,10 @@ namespace WindowsServiceApp.Mongo
 
         public IMongoClient Client { get; set; }
         public IMongoDatabase Database { get; set; }
+
+        public IMongoCollection<T> GetCollection<T>(string collectionName)
+        {
+            return Database.GetCollection<T>(collectionName);
+        }
     }
 }

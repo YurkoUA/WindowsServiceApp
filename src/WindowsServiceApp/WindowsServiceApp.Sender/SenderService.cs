@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
-using System.Windows.Forms;
 using WindowsServiceApp.Infrastructure;
 using WindowsServiceApp.Mongo;
 using WindowsServiceApp.Mongo.Models;
@@ -18,29 +10,34 @@ namespace WindowsServiceApp.Sender
 {
     public partial class SenderService : ServiceBase
     {
-        Timer timer;
-        EmailSender emailSender;
-        ConfigurationService configurationService = new ConfigurationService();
-        string subscriberEmail;
-        MarkupBuilder markupBuilder = new MarkupBuilder();
+        private const string EMAIL_SUBJECT = "Event Log Report";
+        private readonly object locker = new object();
 
-        IDbConnection dbConnection;
-        IRepository<EventLogRecord> repository;
+        private Timer timer;
+        private EmailSender emailSender;
+        private ConfigurationService configurationService = new ConfigurationService();
+
+        private string subscriberEmail;
+        private readonly MarkupBuilder markupBuilder = new MarkupBuilder();
+
+        private readonly IDbConnection dbConnection;
+        private readonly IRepository<EventLogRecord> repository;
 
         public SenderService()
         {
             InitializeComponent();
 
-            dbConnection = new DbConnection(ConfigurationManager.ConnectionStrings["MongoConnection"].ConnectionString,
-                ConfigurationManager.AppSettings["DatabaseName"]);
-            repository = new Repository<EventLogRecord>(dbConnection as DbConnection, "EventLogs");
+            dbConnection = new DbConnection(configurationService.GetDefaultConnectionString(),
+                configurationService.GetDatabaseName());
+
+            repository = new Repository<EventLogRecord>(dbConnection, "EventLogs");
         }
 
         protected override void OnStart(string[] args)
         {
             var smtpConfig = configurationService.GetSmtpConfiguration();
             emailSender = new EmailSender(smtpConfig);
-            subscriberEmail = ConfigurationManager.AppSettings["SubscriberEmail"];
+            subscriberEmail = configurationService.GetSubscriberEmail();
 
             timer = new Timer
             {
@@ -60,14 +57,20 @@ namespace WindowsServiceApp.Sender
 
         private void TimerTick(object sender, ElapsedEventArgs args)
         {
-            var logsWaiter = repository.FindAllAsync();
-            logsWaiter.Wait();
+            lock (locker)
+            {
+                var logsWaiter = repository.FindAllAsync();
+                logsWaiter.Wait();
 
-            var logs = logsWaiter.Result.Take(100);
-            var message = markupBuilder.Build(logs);
+                var logs = logsWaiter.Result.Take(100);
+                var messageText = markupBuilder.Build(logs);
 
-            emailSender.Send(subscriberEmail, "Logs", message);
-            repository.DeleteAsync(l => true).Wait();
+                if (logs.Any())
+                {
+                    emailSender.Send(subscriberEmail, EMAIL_SUBJECT, messageText);
+                    repository.DeleteAllAsync().Wait();
+                }
+            }
         }
     }
 }

@@ -29,7 +29,7 @@ namespace WindowsServiceApp.Logger
                         Source = l.Source,
                         TimeGenerated = l.TimeGenerated,
                         TimeWritten = l.TimeWritten
-                    }).ToList();
+                    }).OrderByDescending(l => l.TimeGenerated).ToList();
 
                 return entries;
             }

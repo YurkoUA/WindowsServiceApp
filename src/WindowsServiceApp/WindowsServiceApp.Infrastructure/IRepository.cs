@@ -11,5 +11,6 @@ namespace WindowsServiceApp.Infrastructure
         Task InsertAsync(T entity);
         Task InsertAsync(IEnumerable<T> entities);
         Task DeleteAsync(Expression<Func<T, bool>> predicate);
+        Task DeleteAllAsync();
     }
 }

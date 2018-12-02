@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 
 namespace WindowsServiceApp.Infrastructure
 {
@@ -22,6 +17,26 @@ namespace WindowsServiceApp.Infrastructure
             };
 
             return configuration;
+        }
+
+        public string GetSubscriberEmail()
+        {
+            return ConfigurationManager.AppSettings["SubscriberEmail"];
+        }
+
+        public string GetDatabaseName()
+        {
+            return ConfigurationManager.AppSettings["DatabaseName"];
+        }
+
+        public string GetDefaultConnectionString()
+        {
+            return ConfigurationManager.ConnectionStrings["MongoConnection"].ConnectionString;
+        }
+
+        public string GetEventLogName()
+        {
+            return ConfigurationManager.AppSettings["EventLogName"];
         }
     }
 }

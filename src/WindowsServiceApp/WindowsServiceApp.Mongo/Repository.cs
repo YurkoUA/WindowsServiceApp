@@ -10,13 +10,13 @@ namespace WindowsServiceApp.Mongo
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        public Repository(DbConnection dbConnection, string collectionName)
+        public Repository(IDbConnection dbConnection, string collectionName)
         {
             this.dbConnection = dbConnection;
-            collection = dbConnection.Database.GetCollection<T>(collectionName);
+            collection = dbConnection.GetCollection<T>(collectionName);
         }
 
-        private readonly DbConnection dbConnection;
+        private readonly IDbConnection dbConnection;
         private readonly IMongoCollection<T> collection;
 
         public async Task<IEnumerable<T>> FindAllAsync()
@@ -37,6 +37,11 @@ namespace WindowsServiceApp.Mongo
         public async Task DeleteAsync(Expression<Func<T, bool>> predicate)
         {
             await collection.DeleteManyAsync(predicate);
+        }
+
+        public async Task DeleteAllAsync()
+        {
+            await collection.DeleteManyAsync(new BsonDocument());
         }
     }
 }
