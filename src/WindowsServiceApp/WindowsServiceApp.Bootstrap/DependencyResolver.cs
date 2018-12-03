@@ -39,6 +39,12 @@ namespace WindowsServiceApp.Bootstrap
             return container.Resolve<IEventLogReader>(new NamedParameter("logName", eventLogName));
         }
 
+        public IEmailSender GetEmailSender()
+        {
+            var config = container.Resolve<IConfigurationService>();
+            return container.Resolve<IEmailSender>(new NamedParameter("smtpConfiguration", config.GetSmtpConfiguration()));
+        }
+
         public void ConfigureServices()
         {
             _builder.RegisterType<MarkupBuilder>().As<IMarkupBuilder>().SingleInstance();

@@ -1,23 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Configuration;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
+using WindowsServiceApp.Bootstrap;
+using WindowsServiceApp.Common.Models;
+using WindowsServiceApp.Infrastructure.Interfaces;
 
 namespace WindowsServiceApp.Sender
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
-            ServicesToRun = new ServiceBase[]
+            MongoModelsConfig.ConfigureModels();
+
+            var resolver = new DependencyResolver();
+            resolver.ConfigureServices();
+            resolver.ConfigureAppConfig(ConfigurationManager.AppSettings, ConfigurationManager.ConnectionStrings);
+            resolver.ConfigureDatabase(ConfigurationManager.ConnectionStrings["MongoConnection"].ConnectionString, ConfigurationManager.AppSettings["DatabaseName"]);
+
+            ServiceBase[] ServicesToRun = new ServiceBase[]
             {
-                new SenderService()
+                new SenderService(
+                    resolver.GetEmailSender(),
+                    resolver.GetService<IConfigurationService>(),
+                    resolver.GetService<IMarkupBuilder>(),
+                    resolver.GetRepository<EventLogRecord>("EventLogs")
+                )
             };
             ServiceBase.Run(ServicesToRun);
         }

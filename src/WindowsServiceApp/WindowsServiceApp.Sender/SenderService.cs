@@ -1,11 +1,9 @@
-﻿using System.Configuration;
-using System.Linq;
+﻿using System.Linq;
 using System.ServiceProcess;
 using System.Timers;
 using WindowsServiceApp.Common.Models;
 using WindowsServiceApp.Infrastructure;
 using WindowsServiceApp.Infrastructure.Interfaces;
-using WindowsServiceApp.Mongo;
 using Timer = System.Timers.Timer;
 
 namespace WindowsServiceApp.Sender
@@ -16,29 +14,28 @@ namespace WindowsServiceApp.Sender
         private readonly object locker = new object();
 
         private Timer timer;
-        private EmailSender emailSender;
-        private ConfigurationService configurationService = new ConfigurationService(ConfigurationManager.AppSettings, ConfigurationManager.ConnectionStrings);
-
         private string subscriberEmail;
-        private readonly MarkupBuilder markupBuilder = new MarkupBuilder();
 
-        private readonly IDbConnection dbConnection;
+        private readonly IEmailSender emailSender;
+        private readonly IConfigurationService configurationService;
+
+        private readonly IMarkupBuilder markupBuilder = new MarkupBuilder();
+        
         private readonly IRepository<EventLogRecord> repository;
 
-        public SenderService()
+        public SenderService(IEmailSender emailSender, IConfigurationService configurationService, IMarkupBuilder markupBuilder, IRepository<EventLogRecord> repository)
         {
+            this.emailSender = emailSender;
+            this.configurationService = configurationService;
+            this.markupBuilder = markupBuilder;
+            this.repository = repository;
+
             InitializeComponent();
-
-            dbConnection = new DbConnection(configurationService.GetDefaultConnectionString(),
-                configurationService.GetDatabaseName());
-
-            repository = new Repository<EventLogRecord>(dbConnection, "EventLogs");
         }
 
         protected override void OnStart(string[] args)
         {
             var smtpConfig = configurationService.GetSmtpConfiguration();
-            emailSender = new EmailSender(smtpConfig);
             subscriberEmail = configurationService.GetSubscriberEmail();
 
             timer = new Timer

@@ -9,6 +9,8 @@ namespace WindowsServiceApp.Logger
     {
         static void Main()
         {
+            MongoModelsConfig.ConfigureModels();
+
             var resolver = new DependencyResolver();
             resolver.ConfigureServices();
             resolver.ConfigureAppConfig(ConfigurationManager.AppSettings, ConfigurationManager.ConnectionStrings);

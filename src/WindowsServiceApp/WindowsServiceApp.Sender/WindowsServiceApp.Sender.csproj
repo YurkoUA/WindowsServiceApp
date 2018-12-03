@@ -70,6 +70,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WindowsServiceApp.Bootstrap\WindowsServiceApp.Bootstrap.csproj">
+      <Project>{EC00CF4E-BAEE-49A0-8658-AA065594EE2C}</Project>
+      <Name>WindowsServiceApp.Bootstrap</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WindowsServiceApp.Common\WindowsServiceApp.Common.csproj">
       <Project>{47F094DD-C2A4-4875-9501-E4D475044B43}</Project>
       <Name>WindowsServiceApp.Common</Name>
