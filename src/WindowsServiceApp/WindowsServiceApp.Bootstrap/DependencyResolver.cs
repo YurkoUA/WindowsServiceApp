@@ -1,6 +1,6 @@
-﻿using Autofac;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.Configuration;
+using Autofac;
 using WindowsServiceApp.Infrastructure;
 using WindowsServiceApp.Infrastructure.Interfaces;
 using WindowsServiceApp.Mongo;
@@ -29,7 +29,8 @@ namespace WindowsServiceApp.Bootstrap
 
         public IRepository<T> GetRepository<T>(string collectionName) where T : class
         {
-            var repo = container.Resolve(typeof(IRepository<T>), new NamedParameter("dbConnection", GetService<IDbConnection>()),
+            var dbConnection = GetService<IDbConnection>();
+            var repo = container.Resolve(typeof(IRepository<T>), new NamedParameter("dbConnection", dbConnection),
                 new NamedParameter("collectionName", collectionName)) as IRepository<T>;
             return repo;
         }
