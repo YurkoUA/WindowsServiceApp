@@ -3,6 +3,7 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Timers;
 using WindowsServiceApp.Common.Models;
+using WindowsServiceApp.Infrastructure;
 using WindowsServiceApp.Infrastructure.Interfaces;
 using Timer = System.Timers.Timer;
 
@@ -27,7 +28,7 @@ namespace WindowsServiceApp.Logger
         {
             timer = new Timer
             {
-                Interval = 2000,
+                Interval = Constants.SERVICE_INTERVAL,
                 Enabled = true,
                 AutoReset = true
             };

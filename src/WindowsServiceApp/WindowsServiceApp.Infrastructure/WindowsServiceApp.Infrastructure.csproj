@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationService.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="EmailSender.cs" />
     <Compile Include="EventLogReader.cs" />
     <Compile Include="Interfaces\IConfigurationService.cs" />
